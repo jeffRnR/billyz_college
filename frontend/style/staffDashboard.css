@@ -1,0 +1,653 @@
+:root {
+    --color-primary: #2d2b7c;
+    --color-danger: #ff7782;
+    --color--success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: white;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-dark-variant: #677483;
+    --color-light: rgba(132, 139, 200, 0.2);
+    --color-primary-variant: #338063;
+    --color-background: #b7babd;
+    --color-yellow: #ebeb3d;
+
+    --card-border-radius: 5px;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+    --box-shadow: 0 1rem 1rem #d2d2d4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: none;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.88rem;
+    background: var(--color-background);
+    user-select: none;
+    overflow-x: auto;
+    color: var(--color-dark);
+}
+
+.container {
+    display: grid;
+    width: 99%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto 23rem;
+    flex-direction: column;
+}
+
+a {
+    color: var(--color-dark);
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+h4 {
+    font-size: 0.8rem;
+}
+
+h5 {
+    font-size: 0.77rem;
+}
+
+small {
+    font-size: 0.75rem;
+}
+
+.profile-photo {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.text-muted {
+    color: var(--color-info-dark);
+}
+
+p {
+    color: var(--color-dark-variant);
+}
+
+b {
+    color: var(--color-dark);
+}
+
+.primary {
+    color: var(--color-primary);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
+.success {
+    color: var(--color--success);
+}
+
+.warning {
+    color: var(--color-warning);
+}
+
+
+/*----------------------------------------------------------------------------------*/
+
+aside {
+    height: 100%;
+    overflow-y: scroll;
+    position: sticky;
+    flex: 1;
+}
+aside::-webkit-scrollbar{
+    width: 0;
+}
+
+.top {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.4rem;
+}
+
+aside .logo {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    text-align: left;
+}
+
+aside .logo a {
+    font-weight: 600;
+    font-size: 4rem;
+    padding-left: 3rem;
+    font-family: 'Rubik Moonrocks', cursive;
+    color: var(--color-yellow);
+}
+
+aside .close {
+    display: none;
+
+}
+
+/*----------------------------------------------------------------------------*/
+aside .sidebar {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    position: relative;
+    top: 1rem;
+    overflow-y: auto;
+}
+aside .sidebar::-webkit-scrollbar{
+    width: 0;
+}
+
+aside h3 {
+    font-weight: 500;
+    font-size: 1rem;
+    padding-right: 2rem;
+}
+
+aside .sidebar a {
+    display: flex;
+    color: var(--color-info-dark);
+    margin-left: 2rem;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    height: 3.7rem;
+    transition: all 300ms ease;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    padding-right: 0.7rem;
+
+}
+
+/*aside .sidebar a:last-child{
+	position: absolute;
+	margin-top: 12rem;
+	bottom: 3rem;
+	width: 100%;
+
+}*/
+aside .sidebar a span {
+    font-size: 1.6rem;
+    transition: all 300ms ease;
+}
+
+aside .sidebar a.active {
+    background: var(--color-primary);
+    color: white;
+    margin-left: 0;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+aside .sidebar a.active:before {
+    content: "";
+    width: 6px;
+    height: 100%;
+    background: var(--color-primary);
+}
+
+aside.sidebar a.sidebar a.active span {
+    color: var(--color-primary);
+    margin-left: cal(1rem - 3px);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+aside .sidebar a:hover {
+    padding-left: 0.2rem;
+}
+
+aside .sidebar a:hover span {
+    margin-left: 1rem;
+}
+
+/*----------------------------------------*/
+
+
+main {
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    width: 100%;
+    flex: 3;
+}
+
+main::-webkit-scrollbar {
+    width: 0;
+}
+
+main .date {
+    display: inline-block;
+    background: var(--color-light);
+    border-radius: var(--border-radius-1);
+    padding: 0.5rem 1rem;
+}
+
+main .date input[type="date"] {
+    background: transparent;
+    color: var(--color-dark);
+}
+
+main .insights {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+main .insights>div {
+    background: var(--color-white);
+    padding: 0.5rem 0.5rem;
+    border-radius: 5px;
+    margin-top: 1rem;    
+    transition: all 300ms ease;
+}
+
+main .insights>div:hover {
+    box-shadow: var(--box-shadow);
+}
+
+main .insights>div span {
+    background: var(--color-danger);
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 1.4rem;
+}
+main th{
+    border: 1px solid #333;
+    padding: 8px;
+    background-color: #f4f4f4
+}
+main .recent-appointments .coursework_title{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+main .recent-appointments .coursework_title select{
+    padding: 0.8rem;
+    background-color: var(--color-primary);
+    color: whitesmoke;
+    border-radius: var(--border-radius-1);
+}
+main .recent-appointments .coursework_title option{
+    padding: 0.8rem;
+    background-color: whitesmoke;
+    color: #333;
+}
+main .recent-appointments .coursework_title option:hover{
+    background-color: var(--color-primary);
+    color: whitesmoke;
+}
+main .btn{
+    margin-top: 10px;
+    background-color: var(--color-primary);
+    color: whitesmoke;
+    padding: 10px;
+    border-radius: var(--border-radius-1);
+    position: absolute;
+    transition: 0.3s ease;
+}
+main .btn:hover{
+    padding-left: 13px;
+    cursor: pointer;
+}
+
+main .insights>div.paid span {
+    background: var(--color--success);
+}
+
+main .insights>div.updated span {
+    background: var(--color-primary);
+}
+
+main .insights>div.complete span {
+    background: var(--color--success);
+}
+
+main.insights>div .middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main .insights h3 {
+    margin: 1rem 0 0 0.6rem;
+    font-size: 1rem;
+}
+
+main .insights small {
+    margin-top: 1.6rem;
+    display: block;
+}
+
+main .recent-appointments {
+    margin-top: 2rem;
+}
+
+main .recent-appointments table {
+    background: white;
+    width: 100%;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    transition: all 300ms ease;
+    top: 2rem;
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+main .recent-appointments table:hover {
+    box-shadow: var(--box-shadow);
+}
+
+main table tbody td {
+    height: 2.8rem;
+    width: 2.8rem;
+    border-bottom: 1px solid var(--color-light);
+    color: var(--color-dark-variant);
+    font-size: 0.94rem;
+}
+main table tr td{
+    border: 1px solid #333; 
+    padding: 10px;
+    text-align: left;
+}
+
+
+main .recent-appointments a {
+    text-align: center;
+    display: block;
+    margin: 1 rem auto;
+    color: var(--color-primary);
+}
+
+.alert_message {
+    background: red;
+    padding: 0.8rem 1.4rem;
+    margin-bottom: 0.1rem;
+    margin-top: 0.3rem;
+    border-radius: var(--card-border-radius-2);
+}
+
+.alert_message.error {
+    background: var(--color-red-light);
+    color: var(--color-red);
+}
+
+.alert_message.success {
+    background: var(--color-green-light);
+    color: var(--color-yellowgreen);
+}
+
+/*------------------------------------------------------------------------------------------------------------*/
+
+.right {
+    margin-top: 1.4rem;
+    margin-right: 2rem;
+    overflow-x: auto;
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
+}
+.right::-webkit-scrollbar{
+    width: 2px;
+}
+.right .top {
+    display: flex;
+    justify-content: end;
+    gap: 2rem;
+    background: transparent;
+    align-items: flex-start;
+    width: 60%;
+}
+
+.right .top button {
+    display: none;
+}
+.notification-icon {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.right .top .profile {
+    display: flex;
+    gap: 2rem;
+    align-items: right;
+    border-radius: var(--card-border-radius);
+    background: white;
+    padding: 0.5rem 2rem;    
+}
+.right .top .profile:hover{
+    box-shadow: var(--box-shadow);
+}
+.right .recent-updates {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.right .recent-updates h2 {
+    margin-bottom: 0.8rem;
+}
+
+.right .recent-updates .coursework-menus {
+    background: white;
+    
+    border-radius: var(--card-border-radius);
+    transition: all 300ms ease;
+    overflow-y: auto;
+    height: auto;
+    position: relative;
+    box-shadow: none;
+    width: 80%;
+}
+
+.right .recent-updates .coursework-menus::-webkit-scrollbar {
+    width: 0;
+}
+
+.right .recent-updates .coursework-menus:hover {
+    box-shadow: var(--box-shadow);    
+}
+
+.right .recent-updates .coursework-menus .coursework-menus-list {
+    display: flex;
+    flex-direction: column;
+}
+.right .recent-updates .coursework-menus .coursework-menu-items .active{
+    background: var(--color-primary);
+    color: white;
+    margin-left: 0;
+    
+}
+
+.right .recent-updates .coursework-menus .coursework-menus-list a {
+    display: flex;
+    color: #333;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    height: 1rem;
+    transition: all 300ms ease;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 1.2rem;
+    font-family: 'Montserrat', sans-serif;
+    padding-right: 0.7rem;
+}
+.right .recent-updates .coursework-menus .coursework-menus-list a:hover{
+    padding-left: 1.7rem;
+}
+
+.right .recent-updates .updates .update img {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.right .recent-updates .updates .update b {
+    padding-left: 0.3rem;
+    margin-bottom: 1rem;
+}
+.right .recent-updates .details{
+    overflow-y: auto;    
+}
+.right .recent-updates .details p{
+    padding: 0.8rem;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+.right .recent-updates .details p:last-child{
+    border-bottom: none;
+}
+
+.right .recent-updates .updates .update small {
+    padding-left: 0.3rem;
+}
+
+.right .recent-updates .updates .update .message {
+    border-bottom: 1px solid grey;
+}
+.right .search-container{
+    height: 10px;
+    margin-bottom: 1rem; 
+    border-radius: var(--border-radius-1);
+}
+.right .search-container form{
+    height: 30px;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--border-radius-1);
+    width: 80%;
+}
+.right .search-container form input{
+    padding: 8px;
+    margin-right: 1rem;
+    color: #333;
+}
+.right .search-container form button{
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-1);
+    color: whitesmoke;
+    padding: 10px;
+    justify-content: center;
+    transition: 0.3s ease;
+    text-align: center;
+    align-items: center;
+}
+.right .search-container form button:hover{
+    padding-left: 13px;
+    cursor: pointer;
+}
+.right .attendance_students{
+    margin-top: 1rem;
+    width: 80%;   
+}
+.right .attendance_students .student{
+    background-color: white;
+    border-radius: var(--border-radius-1); 
+    padding: 8px;
+}
+.right .attendance_students .student li{
+    border-bottom: 1px solid #333;
+    transition: 0.3s ease;
+    font-size: 15px;
+}
+.right .attendance_students .student li:last-child{
+    border-bottom: none;
+}
+.right .attendance_students .student li:hover{
+    padding-left: 3px;
+    
+}
+.profile ul {
+    position: absolute;
+    top: 125%;
+    right: 1%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 3rem 3rem rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: var(--transition);
+}
+.profile:hover ul {
+    visibility: visible;
+    opacity: 1;
+}
+.profile ul li a {
+    padding: 0.6rem 3.5rem;
+    background: var(--color-grey-900);
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+.profile ul li:last-child a {
+    background: var(--color-red);
+    color: var(--color-white);
+}
+
+.profile ul li:last-child a:hover {
+    background: var(--color-red);
+    color: var(--color-green);
+}
