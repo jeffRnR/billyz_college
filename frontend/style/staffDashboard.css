@@ -256,6 +256,7 @@ main {
     overflow-x: auto;
     width: 100%;
     flex: 3;
+    overflow-y: auto;
 }
 
 main::-webkit-scrollbar {

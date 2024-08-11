@@ -153,17 +153,22 @@ $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
                                 </option>
                             <?php endforeach; ?>
                         </select>
+						<select>
+							<option>cat1</option>
+							<option>cat2</option>
+							<option>assignment</option>
+							<option>final exam</option>
+						</select>
                     </form>
                 </div>
 				
-				<form method="POST" action="update_coursework.php">
+				<form method="POST" action="../../../backend/update_coursework.php">
                     <table>
                         <thead>
                             <tr>
                                 <th>Admission No</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Coursework Type</th>
                                 <th>Mark</th>
                                 <th>Present</th>
                             </tr>
@@ -174,10 +179,9 @@ $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
                                     <td><?= $student['admission_no'] ?></td>
                                     <td><?= $student['fname'] ?></td>
                                     <td><?= $student['lname'] ?></td>
-                                    <td><?= $selected_course_id ?></td>
                                     <td><input type="number" name="marks[<?= $student['admission_no'] ?>]" value="<?= $student['mark'] ?? '' ?>"></td>
-                                    <td><input type="checkbox" name="present[<?= $student['admission_no'] ?>]" <?= $student['present'] ? 'checked' : '' ?>></td>
-                                </tr>
+                                    <td><input type="checkbox" name="present[<?= $student['admission_no'] ?>]" value="1" <?= isset($_POST['present'][$student['admission_no']]) ? 'checked' : '' ?>></td>
+								</tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

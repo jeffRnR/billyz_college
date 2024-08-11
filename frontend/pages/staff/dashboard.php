@@ -4,6 +4,13 @@ $id = $_SESSION['user_id'];
 $fetch_data_query = mysqli_query($conn, "SELECT * FROM users WHERE role = 'staff' and user_id = '$id'");
 $results = mysqli_fetch_assoc($fetch_data_query);
 
+$course_query = mysqli_query($conn, "SELECT * FROM courses WHERE staff_id = '$id'");
+$courses = mysqli_fetch_all($course_query, MYSQLI_ASSOC);
+
+$selected_course_id = isset($_GET['course_id']) ? $_GET['course_id'] : $courses[0]['course_id']; // Default to first course if not selected
+$course_name_query = mysqli_query($conn, "SELECT * FROM courses WHERE course_id = '$selected_course_id' ");
+$course_name_result = mysqli_fetch_all($course_name_query, MYSQLI_ASSOC);
+
 ?>
 
 <html>
@@ -153,6 +160,50 @@ $results = mysqli_fetch_assoc($fetch_data_query);
 					</div>
 				</div>
             </div>
+			<div class="recent-appointments">
+                <div class="coursework_title">
+                    <h2>Your Students</h2>
+                    <form method="GET" action="coursework.php" class="course_form">
+                        <select name="course_id" onchange="this.form.submit()">
+                            <?php foreach ($courses as $course): ?>
+                                <option value="<?= $course['course_id'] ?>" <?= $course['course_id'] == $selected_course_id ? 'selected' : '' ?>>
+                                    <?= $course['course_name'] ?>
+                                </option>
+                            <?php endforeach; ?>
+						</select>
+						<select>
+							<option>2024 1.1</option>
+							<option>2024 1.2</option>
+							<option>2025 1.1</option>
+							<option>2025 1.2</option>
+						</select>
+                    </form>
+                </div>
+				
+				<form method="POST" action="../../../backend/update_dashboard.php">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Coursework</th>
+                                <th>Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($course_name_result as $course_name_result): ?>
+                                <tr>
+                                    <td><?= $course_name_result['course_name'] ?></td>
+                                    <td><input type="text" name="coursework_type[<?= $course_name_result['course_id'] ?>]" value="<?= $course_name_result['coursework_type'] ?? '' ?>"></td>
+                                    <td><input type="number" name="coursework_weight[<?= $course_name_result['course_id'] ?>]" value="<?= $course_name_result['coursework_weight'] ?? '' ?>"></td>
+								</tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <input type="hidden" name="course_id" value="<?= $selected_course_id ?>">
+                    <input type="hidden" name="coursework_type" value="<?= $selected_coursework_type ?>">
+                    <button type="submit" class="btn">Update Coursework</button>
+                </form>
+			</div>
 		</main>
 
 		<!----------------------------------------------------------->

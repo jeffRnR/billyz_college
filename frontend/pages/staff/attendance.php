@@ -162,7 +162,7 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
                                     <td><input type="time" name="start_time[<?= $student['admission_no'] ?>]" onchange="calculateDurationAndAbsent('<?= $student['admission_no'] ?>')" value="<?= $student['start_time'] ?? '' ?>"></td>
                                     <td><input type="time" name="end_time[<?= $student['admission_no'] ?>]" onchange="calculateDurationAndAbsent('<?= $student['admission_no'] ?>')" value="<?= $student['end_time'] ?? '' ?>"></td>
                                     <td><input type="number" name="duration[<?= $student['admission_no'] ?>]" readonly></td>
-                                    <td><input type="checkbox" name="present[<?= $student['admission_no'] ?>]" onchange="updateTotalDurationAndAbsent('<?= $student['admission_no'] ?>')" <?= $student['present'] ? 'checked' : '' ?>></td>
+                                    <td><input type="checkbox" name="present[<?= $student['admission_no'] ?>]" value="1" <?= isset($_POST['present'][$student['admission_no']]) ? 'checked' : '' ?>></td>
                                     <td id="percentAbsent_<?= $student['admission_no'] ?>">0%</td>
                                 </tr>
                             <?php endforeach; ?>
