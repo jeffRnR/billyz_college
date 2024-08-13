@@ -3,8 +3,7 @@ require '../../../backend/connect.php';
 $id = $_SESSION['user_id'];
 $user_query = mysqli_query($conn, "SELECT * FROM users WHERE user_id = '$id'");
 $user = mysqli_fetch_array($user_query, MYSQLI_ASSOC);
-
-
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
 // Fetch courses associated with the staff member
 $course_query = mysqli_query($conn, "SELECT * FROM courses WHERE staff_id = '$id'");
 $courses = mysqli_fetch_all($course_query, MYSQLI_ASSOC);
@@ -12,6 +11,9 @@ $courses = mysqli_fetch_all($course_query, MYSQLI_ASSOC);
 $selected_course_id = isset($_GET['course_id']) ? $_GET['course_id'] : $courses[0]['course_id']; // Default to first course if not selected
 $selected_coursework_type = isset($_GET['type']) ? $_GET['type'] : 'CAT 1'; // Default to 'CAT 1'
 
+
+$coursework_query = mysqli_query($conn, "SELECT * FROM coursework_type WHERE course = '$selected_course_id'");
+$coursework = mysqli_fetch_all($coursework_query, MYSQLI_ASSOC);
 // Fetch students and their coursework marks for the selected course and coursework type
 $students_query = mysqli_query($conn, "SELECT s.admission_no, 
         s.fname, 
@@ -34,10 +36,12 @@ $students_query = mysqli_query($conn, "SELECT s.admission_no,
     WHERE 
         s.course = '$selected_course_id'
 ");
-
 $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
-
+$admission_no_query = mysqli_query($conn, "SELECT admission_no FROM students WHERE course = '$selected_course_id' AND admission_no LIKE '%$searchTerm%'");
+$admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 ?>
+
+<!-- ------------------------------------------------------------------------------------------ -->
 
 <html>
 <head>
@@ -73,9 +77,6 @@ $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
 				</a>
 				<a href="attendance.php">
 					<h3>Attendance</h3>
-				</a>
-				<a href="" >
-					<h3>Subbmissions</h3>
 				</a>
 				<a href="">
 					<h3>Uploads</h3>
@@ -154,10 +155,11 @@ $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
                             <?php endforeach; ?>
                         </select>
 						<select>
-							<option>cat1</option>
-							<option>cat2</option>
-							<option>assignment</option>
-							<option>final exam</option>
+						<?php foreach ($coursework as $coursework): ?>
+							<option>
+								<?= $coursework['coursework_type'] ?>
+							</option>
+						<?php endforeach; ?>
 						</select>
                     </form>
                 </div>
@@ -195,29 +197,21 @@ $students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
 		<!----------------------------------------------------------->
 
 		<div class="right">
-			<!-- <div class="top">
-				<button id="menu-btn">					
-					<span class="material-symbols-sharp">menu</span>
-				</button>
-				<div class="profile">
-					<div class="info">
-						<h3>Welcome 
-                            <b><?=$user['fname']?></b>
-                        </h3>
-						<small class="text-muted">Staff</small>
-					</div>
-				</div>
-			</div> -->
+            
 			<div class="recent-updates">
-				<h2>Coursework details</h2>
-				<div class="coursework-menus">					
-					<div class="coursework-menus-list">
-                        <ul class="coursework-menu-items">
-                            <li><a href="#" class="active">CAT 1</a></li>
-                            <li><a href="">CAT 2</a></li>
-                            <li><a href="">Assignment </a></li>
-                            <li><a href="">Add coursework</a></li>
-                            <li><a href="">Final exam</a></li>
+				<h2>Students</h2>
+                <div class="search-container">
+                    <form method="GET" action="attendance.php" class="attendance_form"> 
+                        <input type="text" name="search" placeholder="Search by admission number..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                        <button type="submit" class="btn">Search</button>
+                    </form>
+                </div>
+				<div class="attendance_students">					
+					<div class="student_list">
+                        <ul class="student">
+                            <?php foreach ($admission_nos as $admission): ?>
+                                <li><a href="#"><?= $admission['admission_no'] ?></a></li>
+                            <?php endforeach; ?>                            
                         </ul>										
 					</div>
 				</div>		

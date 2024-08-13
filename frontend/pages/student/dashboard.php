@@ -1,10 +1,10 @@
 <?php 
 
 require '../../../backend/connect.php';
-$id = $_SESSION['student_id'];
+//$id = $_SESSION['student_id'];
 
-$fetch_student = mysqli_query("SELECT * FROM students where admission_no='$id'");
-$student = mysqli_fetch_array($conn, $fetch_student);
+//$fetch_student = mysqli_query("SELECT * FROM students where admission_no='$id'");
+//$student = mysqli_fetch_array($conn, $fetch_student);
 
 ?>
 
@@ -15,7 +15,7 @@ $student = mysqli_fetch_array($conn, $fetch_student);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Billyz College</title>
-    <link rel="stylesheet" type="text/css" href="../style/Index.css">
+    <link rel="stylesheet" type="text/css" href="../../style/studentDashboard.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +28,40 @@ $student = mysqli_fetch_array($conn, $fetch_student);
         rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <div class="container nav_container">
-            <a href="#" class="nav_logo">Billyz College</a>
-            <h2>Welcome <?=$student['fname'] $student['lname']?></h2>
+    <div class="container">
+        <header>
+            <h1>Welcome <br><span>Jeff</span></h1>
+            <div class="icons">
+                <span class="icon icon-bell"></span>
+                <span class="icon icon-settings"></span>
+            </div>
+        </header>
+        <div class="grid">
+            <div class="card">
+                <div class="icon icon-profile">
+                </div>
+                <p>Profile</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-fees"></div>
+                <p>Fees</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-coursework"></div>
+                <p>Coursework</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-attendance"></div>
+                <p>Attendance</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-timetable"></div>
+                <p>Timetable</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-timetable"></div>
+                <p>Upload</p>
+            </div>
         </div>
-    </nav>
+    </div>
 </body>

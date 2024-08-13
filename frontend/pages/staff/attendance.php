@@ -106,9 +106,6 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 				<a href="" class="active">
 					<h3>Attendance</h3>
 				</a>
-				<a href="" >
-					<h3>Subbmissions</h3>
-				</a>
 				<a href="">
 					<h3>Uploads</h3>
 				</a>

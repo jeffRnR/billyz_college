@@ -47,9 +47,6 @@ $course_name_result = mysqli_fetch_all($course_name_query, MYSQLI_ASSOC);
 				</a>
 				<a href="attendance.php" >					
 					<h3>Attendance</h3>
-				</a>
-				<a href="">					
-					<h3>Submissions</h3>
 				</a>				
 				<a href="">					
 					<h3>Uploads</h3>
@@ -162,7 +159,7 @@ $course_name_result = mysqli_fetch_all($course_name_query, MYSQLI_ASSOC);
             </div>
 			<div class="recent-appointments">
                 <div class="coursework_title">
-                    <h2>Your Students</h2>
+                    <h2>Coursework</h2>
                     <form method="GET" action="coursework.php" class="course_form">
                         <select name="course_id" onchange="this.form.submit()">
                             <?php foreach ($courses as $course): ?>
@@ -190,17 +187,16 @@ $course_name_result = mysqli_fetch_all($course_name_query, MYSQLI_ASSOC);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($course_name_result as $course_name_result): ?>
+                            <?php foreach ($course_name_result as $course_name): ?>
                                 <tr>
-                                    <td><?= $course_name_result['course_name'] ?></td>
-                                    <td><input type="text" name="coursework_type[<?= $course_name_result['course_id'] ?>]" value="<?= $course_name_result['coursework_type'] ?? '' ?>"></td>
-                                    <td><input type="number" name="coursework_weight[<?= $course_name_result['course_id'] ?>]" value="<?= $course_name_result['coursework_weight'] ?? '' ?>"></td>
+                                    <td><?= $course_name['course_name'] ?></td>
+                                    <td><input type="text" name="coursework_type[<?= $course_name['course_id'] ?>]" value="<?= $course_name_result['coursework_type'] ?? '' ?>"></td>
+                                    <td><input type="number" name="coursework_weight[<?= $course_name['course_id'] ?>]" value="<?= $course_name_result['coursework_weight'] ?? '' ?>"></td>
 								</tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                     <input type="hidden" name="course_id" value="<?= $selected_course_id ?>">
-                    <input type="hidden" name="coursework_type" value="<?= $selected_coursework_type ?>">
                     <button type="submit" class="btn">Update Coursework</button>
                 </form>
 			</div>

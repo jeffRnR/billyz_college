@@ -256,7 +256,8 @@ main {
     overflow-x: auto;
     width: 100%;
     flex: 3;
-    overflow-y: auto;
+    overflow-y: scroll;
+    position: sticky;
 }
 
 main::-webkit-scrollbar {
@@ -309,6 +310,7 @@ main .recent-appointments .coursework_title{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
 }
 main .recent-appointments .coursework_title select{
     padding: 0.8rem;
@@ -369,6 +371,7 @@ main .insights small {
 
 main .recent-appointments {
     margin-top: 2rem;
+    position: absolute;
 }
 
 main .recent-appointments table {
