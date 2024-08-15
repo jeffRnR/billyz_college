@@ -22,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $endTime = mysqli_real_escape_string($conn, $endTime);
         $duration = mysqli_real_escape_string($conn, $duration);
 
-        $query = "
-            INSERT INTO student_attendance (student_admission, course_id, coursework_type, date, start_time, end_time, duration, present)
+        $query = "INSERT INTO student_attendance (student_admission, course_id, coursework_type, `date`, start_time, end_time, duration, present)
             VALUES ('$admissionNo', '$selected_course_id', '$selected_coursework_type', '$date', '$startTime', '$endTime', '$duration', $present)
             ON DUPLICATE KEY UPDATE
                 date = VALUES(date),
@@ -35,10 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!mysqli_query($conn, $query)) {
             echo "Error: " . mysqli_error($conn);
         }
+        else{
+            $success = "Updated successfully.";
+        }
     }
 
     // Redirect back to the same page with updated data
-    header("Location: coursework.php?course_id=$selected_course_id&type=$selected_coursework_type");
+    header("Location: ../frontend/pages/staff/coursework.php?course_id=$selected_course_id&coursework_type=$selected_coursework_type&success=1");
     exit();
 }
 ?>

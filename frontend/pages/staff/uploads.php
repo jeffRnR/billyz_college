@@ -14,32 +14,7 @@ $selected_coursework_type = isset($_GET['type']) ? $_GET['type'] : 'CAT 1';
 
 $coursework_query = mysqli_query($conn, "SELECT * FROM coursework_type WHERE course = '$selected_course_id'");
 $coursework = mysqli_fetch_all($coursework_query, MYSQLI_ASSOC);
-// Fetch students and their coursework marks for the selected course and coursework type
-$students_query = mysqli_query($conn, "SELECT s.user_id, 
-        s.fname, 
-        s.lname, 
-        s.course,
-        sc.coursework_id, 
-        sc.coursework_type, 
-        sc.coursework_mark, 
-        sc.coursework_present
-    FROM 
-        users s
-    LEFT JOIN 
-        student_coursework sc 
-    ON 
-        s.user_id = sc.student_admission 
-    AND 
-        sc.course_id = '$selected_course_id' 
-    AND 
-        sc.coursework_type = '$selected_coursework_type'
-    WHERE 
-        s.course = '$selected_course_id'
-	AND
-		s.role = 'student'
-");
-$students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
-$admission_no_query = mysqli_query($conn, "SELECT user_id FROM users WHERE course = '$selected_course_id' AND user_id LIKE '%$searchTerm%' AND role='student'");
+$admission_no_query = mysqli_query($conn, "SELECT admission_no FROM students WHERE course = '$selected_course_id' AND admission_no LIKE '%$searchTerm%'");
 $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 ?>
 
@@ -49,7 +24,7 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>coursework</title>
+	<title>uploads</title>
 	<link rel="stylesheet" type="text/css" href="../../style/staffDashboard.css">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,16 +49,16 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 				<a href="dashboard.php">					
 					<h3>Dashboard</h3>
 				</a>
-				<a href="" class="active">					
+				<a href="coursework.php">					
 					<h3>Coursework</h3>
 				</a>
 				<a href="attendance.php">
 					<h3>Attendance</h3>
 				</a>
-				<a href="submissions.php">
+                <a href="submissions.php">
 					<h3>Submissions</h3>
 				</a>
-				<a href="uploads.php">
+				<a href="" class="active">
 					<h3>Uploads</h3>
 				</a>
                 <a href="">
@@ -97,48 +72,15 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 
 		<!-------------------------------------------------------section------------------------------------------------->
 		<main>
-			<h1>Students Coursework</h1>
+			<h1>Upload to students</h1>
 			<div class="insights">
-				<div class="pending">
-					<span class="material-symbols-sharp">
-						insights
-					</span>
-					<div class="middle">
-						<div class="left">
-							<h3>Pending Update</h3>
-							<h1>2</h1>
-						</div>
-					</div>
-				</div>
-				<div class="updated">
-					<span class="material-symbols-sharp">
-						insights
-					</span>
-					<div class="middle">
-						<div class="left">
-							<h3>Updated</h3>
-							<h1>0</h1>
-						</div>
-					</div>
-				</div>
                 <div class="updated">
 					<span class="material-symbols-sharp">
 						insights
 					</span>
 					<div class="middle">
 						<div class="left">
-							<h3>Class average</h3>
-							<h1>0</h1>
-						</div>
-					</div>
-				</div>
-                <div class="updated">
-					<span class="material-symbols-sharp">
-						insights
-					</span>
-					<div class="middle">
-						<div class="left">
-							<h3>Students</h3>
+							<h3>Total uploads</h3>
 							<h1>0</h1>
 						</div>
 					</div>
@@ -151,6 +93,12 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
                 <div class="coursework_title">
                     <h2>Your Students</h2>
                     <form method="GET" action="coursework.php" class="course_form">
+						<?php if (isset($success)): ?>
+							<p class="success"><?= $success ?></p>
+						<?php endif; ?>
+						<?php if (isset($error)): ?>
+							<p class="error"><?= $error ?></p>
+						<?php endif; ?>
                         <select name="course_id" onchange="this.form.submit()">
                             <?php foreach ($courses as $course): ?>
                                 <option value="<?= $course['course_id'] ?>" <?= $course['course_id'] == $selected_course_id ? 'selected' : '' ?>>
@@ -165,42 +113,37 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 							</option>
 						<?php endforeach; ?>
 						</select>
+                        <select>
+							<option>2024 1.1</option>
+							<option>2024 1.2</option>
+							<option>2025 1.1</option>
+							<option>2025 1.2</option>
+						</select>
                     </form>
                 </div>
-				
-				<form method="POST" action="../../../backend/update_coursework.php">
-					<?php if (isset($success)): ?>
-						<p class="success"><?= $success ?></p>
-					<?php endif; ?>
-					<?php if (isset($error)): ?>
-						<p class="error"><?= $error ?></p>
-                    <?php endif; ?>
+                <form method="POST" action="../../../backend/update_uploads.php">
                     <table>
                         <thead>
                             <tr>
-                                <th>Admission No</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Mark</th>
-                                <th>Present</th>
+                                <th>Upload title</th>
+                                <th>Due date</th>
+                                <th>Due time</th>
+                                <th>Upload file</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($students as $student): ?>
-                                <tr>
-                                    <td><?= $student['user_id'] ?></td>
-                                    <td><?= $student['fname'] ?></td>
-                                    <td><?= $student['lname'] ?></td>
-                                    <td><input type="number" name="marks[<?= $student['user_id'] ?>]" value="<?= $student['mark'] ?? '' ?>"></td>
-                                    <td class="checkbox"><input type="checkbox" name="present[<?= htmlspecialchars($student['user_id']) ?>]" value="1" checked <?= isset($_POST['present'][$student['user_id']]) && !$_POST['present'][$student['user_id']] ? '' : 'checked' ?>></td>
-								</tr>
-                            <?php endforeach; ?>
+                            <tr>
+                                <td><input type="text" name="upload_title"></td>
+                                <td><input type="date" name="due_date"></td>
+                                <td><input type="time" name="due_time"></td>
+                                <td><input type="file" name="upload_file"></td>
+                            </tr>
                         </tbody>
                     </table>
                     <input type="hidden" name="course_id" value="<?= $selected_course_id ?>">
-                    <input type="hidden" name="coursework_type" value="<?= $selected_coursework_type ?>">
-                    <button type="submit" class="btn">Update Marks</button>
+                    <button type="submit" class="btn">Upload</button>
                 </form>
+                
 			</div>
 		</main>
 
@@ -211,7 +154,7 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 			<div class="recent-updates">
 				<h2>Students</h2>
                 <div class="search-container">
-                    <form method="GET" action="coursework.php" class="attendance_form"> 
+                    <form method="GET" action="uploads.php" class="attendance_form"> 
                         <input type="text" name="search" placeholder="Search by admission number..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
                         <button type="submit" class="btn">Search</button>
                     </form>
@@ -220,7 +163,7 @@ $admission_nos = mysqli_fetch_all($admission_no_query, MYSQLI_ASSOC);
 					<div class="student_list">
                         <ul class="student">
                             <?php foreach ($admission_nos as $admission): ?>
-                                <li><a href="#"><?= $admission['user_id'] ?></a></li>
+                                <li><a href="#"><?= $admission['admission_no'] ?></a></li>
                             <?php endforeach; ?>                            
                         </ul>										
 					</div>

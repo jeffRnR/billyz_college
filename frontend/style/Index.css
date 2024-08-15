@@ -484,11 +484,12 @@ header {
         height: 52vh;
         margin-bottom: 15rem;
     }
-
     .header_container {
         gap: 0;
         padding-bottom: 3rem;
         margin-bottom: 4rem;
+        display: flex;
+        flex-direction: column;
     }
 
     .header_left a {

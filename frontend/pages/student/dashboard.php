@@ -1,10 +1,10 @@
 <?php 
 
 require '../../../backend/connect.php';
-//$id = $_SESSION['student_id'];
+$id = $_SESSION['user_id'];
 
-//$fetch_student = mysqli_query("SELECT * FROM students where admission_no='$id'");
-//$student = mysqli_fetch_array($conn, $fetch_student);
+// $fetch_student = mysqli_query("SELECT * FROM users where user_id='$id' and `role`='student'");
+// $student = mysqli_fetch_array($conn, $fetch_student);
 
 ?>
 
@@ -57,6 +57,10 @@ require '../../../backend/connect.php';
             <div class="card">
                 <div class="icon icon-timetable"></div>
                 <p>Timetable</p>
+            </div>
+            <div class="card">
+                <div class="icon icon-timetable"></div>
+                <p>Submissions</p>
             </div>
             <div class="card">
                 <div class="icon icon-timetable"></div>

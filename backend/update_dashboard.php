@@ -20,8 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!mysqli_query($conn, $query)) {
         echo "Error: " . mysqli_error($conn);
     }
+    else{
+        $success = " coursework Updated successfully.";
+    }
 
-    header("Location: ../frontend/pages/staff/dashboard.php");
+    header("Location: ../frontend/pages/staff/dashboard.php?course_id=$selected_course_id&success=1");
     exit();
 }
 ?>

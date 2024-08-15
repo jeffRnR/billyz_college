@@ -1,18 +1,15 @@
 <?php
 require "../../../backend/connect.php";
 $id = $_SESSION['user_id'];
-$fetch_data_query = mysqli_query($conn, "SELECT * FROM users WHERE role = 'staff' and user_id = '$id'");
+$fetch_data_query = mysqli_query($conn, "SELECT * FROM users WHERE role = 'admin' and user_id = '$id'");
 $results = mysqli_fetch_assoc($fetch_data_query);
 
-$course_query = mysqli_query($conn, "SELECT * FROM courses WHERE staff_id = '$id'");
+$course_query = mysqli_query($conn, "SELECT * FROM courses");
 $courses = mysqli_fetch_all($course_query, MYSQLI_ASSOC);
 
-$selected_course_id = isset($_GET['course_id']) ? $_GET['course_id'] : $courses[0]['course_id']; // Default to first course if not selected
+$selected_course_id = isset($_GET['course_id']) ? $_GET['course_id'] : $courses[0]['course_id'];
 $course_name_query = mysqli_query($conn, "SELECT * FROM courses WHERE course_id = '$selected_course_id' ");
 $course_name_result = mysqli_fetch_all($course_name_query, MYSQLI_ASSOC);
-
-$semesters_query = mysqli_query($conn, "SELECT * FROM semester WHERE course = '$selected_course_id'");
-$semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 
 ?>
 
@@ -20,7 +17,7 @@ $semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Staff Dashboard</title>
+	<title>Admin Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="../../style/staffDashboard.css">
 	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,20 +42,30 @@ $semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 				<a href="" class="active">					
 					<h3>Dashboard</h3>
 				</a>
-				<a href="coursework.php" >					
-					<h3>Coursework</h3>
+				<a href="staffList.php" >					
+					<h3>Staff</h3>
 				</a>
-				<a href="attendance.php" >					
-					<h3>Attendance</h3>
+				<a href="adminList.php" >					
+					<h3>Admin</h3>
 				</a>
-				<a href="submissions.php">
-					<h3>Submissions</h3>
+				<a href="studentList.php">
+					<h3>Student</h3>
 				</a>				
-				<a href="uploads.php">					
-					<h3>Uploads</h3>
+				<a href="coursesList.php">					
+					<h3>Course</h3>
 				</a>
-                <a href="">					
+				<a href="semesterList.php">		
+					<h3>Semesters</h3>
+				</a>
+                <a href="setFees.php">					
+					<h3>Set Fees</h3>
+				</a>
+                <a href="">
 					<h3>Timetable</h3>
+				</a>
+				
+				<a href="">					
+					<h3>Clearance</h3>
 				</a>
                 <a href="">
 					<h3>Profile</h3>
@@ -79,7 +86,7 @@ $semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 					</span>
 					<div class="middle">
 						<div class="left">
-							<h3>Total Courses</h3>
+							<h3>Total Staff</h3>
 							<h1>2</h1>
 						</div>
 					</div>
@@ -102,7 +109,7 @@ $semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 					</span>
 					<div class="middle">
 						<div class="left">
-							<h3>Total Classes</h3>
+							<h3>Total Courses</h3>
 							<h1>0</h1>
 						</div>
 					</div>
@@ -157,62 +164,35 @@ $semesters = mysqli_fetch_all($semesters_query, MYSQLI_ASSOC);
 					</span>
 					<div class="middle">
 						<div class="left">
-							<h3>Total Uploads</h3>
+							<h3>Cleared Students</h3>
+							<h1>0</h1>
+						</div>
+					</div>
+				</div>
+				<div class="updated">
+					<span class="material-symbols-sharp">
+						insights
+					</span>
+					<div class="middle">
+						<div class="left">
+							<h3>Total Fee Paid</h3>
+							<h1>0</h1>
+						</div>
+					</div>
+				</div>
+				<div class="pending">
+					<span class="material-symbols-sharp">
+						insights
+					</span>
+					<div class="middle">
+						<div class="left">
+							<h3>Total fee pending</h3>
 							<h1>0</h1>
 						</div>
 					</div>
 				</div>
             </div>
-			<div class="recent-appointments">
-                <div class="coursework_title">
-                    <h2>Coursework</h2>
-                    <form method="GET" action="coursework.php" class="course_form">
-                        <select name="course_id" onchange="this.form.submit()">
-                            <?php foreach ($courses as $course): ?>
-                                <option value="<?= $course['course_id'] ?>" <?= $course['course_id'] == $selected_course_id ? 'selected' : '' ?>>
-                                    <?= $course['course_name'] ?>
-                                </option>
-                            <?php endforeach; ?>
-						</select>
-						<select name="semester_id" onchange="this.form.submit()">
-                            <?php foreach ($semesters as $semesters): ?>
-                                <option value="<?= $semesters['semester_id'] ?>" <?= $semesters['course'] == $selected_course_id ? 'selected' : '' ?>>
-                                    <?= $semesters['year_of_study'] ?>.<?= $semesters['semester_number']?>
-                                </option>
-                            <?php endforeach; ?>
-						</select>
-                    </form>
-                </div>
-				
-				<form method="POST" action="../../../backend/update_dashboard.php">
-					<?php if (isset($success)): ?>
-                        <p class="success"><?= $success ?></p>
-                    <?php endif; ?>
-                    <?php if (isset($error)): ?>
-                        <p class="error"><?= $error ?></p>
-                    <?php endif; ?>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Course</th>
-                                <th>Coursework</th>
-                                <th>Weight</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($course_name_result as $course_name): ?>
-                                <tr>
-                                    <td><?= $course_name['course_name'] ?></td>
-                                    <td><input type="text" name="coursework_type[<?= $course_name['course_id'] ?>]" value="<?= $course_name_result['coursework_type'] ?? '' ?>"></td>
-                                    <td><input type="number" name="coursework_weight[<?= $course_name['course_id'] ?>]" value="<?= $course_name_result['coursework_weight'] ?? '' ?>"></td>
-								</tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                    <input type="hidden" name="course_id" value="<?= $selected_course_id ?>">
-                    <button type="submit" class="btn">Update Coursework</button>
-                </form>
-			</div>
+			
 		</main>
 
 		<!----------------------------------------------------------->

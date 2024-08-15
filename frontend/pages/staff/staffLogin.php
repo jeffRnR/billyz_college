@@ -1,6 +1,6 @@
 <?php
 require "../../../backend/connect.php";
-$username =$_SESSION['login-data']['username'] ?? null;
+$user_id =$_SESSION['login-data']['user_id'] ?? null;
 $password =$_SESSION['login-data']['password'] ?? null;
 
 unset($_SESSION['login-data']);
@@ -25,7 +25,7 @@ unset($_SESSION['login-data']);
 <body>
 	<nav>
 		<div class="cointainer nav_container"> 
-			<a href="../pages/Index.html" class="nav_logo"><h4>Billyz College</h4></a>
+			<a href="../Index.html" class="nav_logo"><h4>Billyz College</h4></a>
 			<ul id="nav_menu" class="nav_items">
 				<li><a href="../pages/Index.html">Home</a></li>
 				<li><a href="../pages/Index.html" target="_blank">About</a></li>					
@@ -38,7 +38,7 @@ unset($_SESSION['login-data']);
 
 	<section class="login">
 		<div class="container login_container">
-			<h4> Staff Login</h4>
+			<h4>Login</h4>
 
 			<?php if(isset($_SESSION['login'])) : ?>
 				<div class="alert_message error">
@@ -50,7 +50,7 @@ unset($_SESSION['login-data']);
 			<?php endif?>				
 							
 			<form action="../../../backend/login-logic.php" method="post">							
-				<input type="username" name="username" value="<?= $username?>" placeholder="Username" >
+				<input type="number" name="user_id" value="<?= $user_id?>" placeholder="Username" >
 
 				<input type="password" name="password" value="<?= $password?>" placeholder="Password">				
 

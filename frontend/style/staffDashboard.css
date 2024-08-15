@@ -1,8 +1,8 @@
 :root {
     --color-primary: #2d2b7c;
     --color-danger: #ff7782;
-    --color--success: #41f1b6;
-    --color-warning: #ffbb55;
+    --color--success: #098805;
+    --color-warning: #ff5555;
     --color-white: white;
     --color-info-dark: #7d8da1;
     --color-info-light: #dce1eb;
@@ -258,6 +258,7 @@ main {
     flex: 3;
     overflow-y: scroll;
     position: sticky;
+    overflow-x: scroll;
 }
 
 main::-webkit-scrollbar {
@@ -306,11 +307,51 @@ main th{
     padding: 8px;
     background-color: #f4f4f4
 }
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    appearance: auto; 
+    -webkit-appearance: checkbox; 
+    -moz-appearance: checkbox;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--color-primary); 
+    border-color: var(--color-primary);
+}
+main .recent-appointments {
+    min-width: 50rem;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+.delete-btn:hover{
+    cursor: pointer;
+    padding-left: 3px;
+}
+
+
 main .recent-appointments .coursework_title{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     
+}
+main .recent-appointments .coursework_title a{
+    padding: 0.8rem;
+    background-color: var(--color-primary);
+    color: whitesmoke;
+    border-radius: var(--border-radius-1);
+    max-width: 10rem;
+    /* width: fit-content; */
+    transition: 0.3s ease;
+}
+main .recent-appointments .coursework_title a:hover{
+    padding-left: 1.1rem;
 }
 main .recent-appointments .coursework_title select{
     padding: 0.8rem;
@@ -333,12 +374,61 @@ main .btn{
     color: whitesmoke;
     padding: 10px;
     border-radius: var(--border-radius-1);
-    position: absolute;
+    margin-right: 10px;
     transition: 0.3s ease;
 }
 main .btn:hover{
     padding-left: 13px;
     cursor: pointer;
+}
+main .delete-btn{
+    background-color: rgb(115, 10, 10);
+}
+main .close-btn{
+    background-color: rgb(115, 10, 10);
+}
+main .edit-form{
+    padding: 1.2rem;
+    display: flex;
+    flex: column;
+    background-color: whitesmoke;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: auto;
+    border-radius: 5px;
+}
+main .edit-form form{
+    display: inline-flex;    
+    padding: 1.2rem;
+    border: 1px solid #333;
+    margin: 8px;
+}
+main .edit-form form label{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    max-height: 40px;
+}
+main .edit-form form input{
+    background-color: var(--color-info-light);
+    padding-left: 5px;
+    padding-right: 5px;
+    max-width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    max-height: 40px;
+    height: auto;
+}
+main .edit-form form select{
+    background-color: var(--color-info-light);
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    max-height: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 main .insights>div.paid span {
@@ -375,19 +465,22 @@ main .recent-appointments {
 }
 
 main .recent-appointments table {
-    background: white;
+    background: whitesmoke;
     width: 100%;
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
     text-align: center;
     transition: all 300ms ease;
-    top: 2rem;
+    
     overflow-x: auto;
     margin-top: 10px;
 }
 
 main .recent-appointments table:hover {
     box-shadow: var(--box-shadow);
+}
+main form input{
+    background: transparent;
 }
 
 main table tbody td {
